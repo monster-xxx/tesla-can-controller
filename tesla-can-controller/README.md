@@ -76,38 +76,44 @@ tesla-can-controller/
 
 ## 🚀 快速开始
 
-### 1. 开发环境搭建
+### 1. 一键开发环境搭建
 ```bash
-# 安装ESP-IDF
-git clone --recursive https://github.com/espressif/esp-idf.git
-cd esp-idf
-./install.sh
-source export.sh
+# 克隆项目
+git clone https://github.com/monster-xxx/tesla-can-controller.git
+cd tesla-can-controller
 
-# 获取Tesla DBC文件
-git clone https://github.com/joshwardell/model3dbc.git
+# 运行开发环境安装脚本（需要sudo权限）
+sudo ./tools/setup_dev_env.sh
 
-# 安装M5Dial BSP
-cd ~/esp
-git clone https://github.com/espressif/esp-bsp.git
+# 设置开发环境
+source ~/tesla-can-dev/setup_env.sh
 ```
 
-### 2. 编译固件
+### 2. 编译所有固件
 ```bash
-# 编译设备A (M5Dial)
-cd software/firmware/device_a_m5dial
-idf.py set-target esp32s3
-idf.py build
+# 一键编译所有设备固件
+./tools/build_all.sh
 
-# 编译设备B (CAN读取器)
-cd ../device_b_can_reader
-idf.py set-target esp32c6
-idf.py build
+# 或者分别编译
+build-device-a   # 编译设备A (M5Dial)
+build-device-b   # 编译设备B (CAN读取器)
+build-device-c   # 编译设备C (氛围灯控制器)
+```
 
-# 编译设备C (氛围灯控制器)
-cd ../device_c_ambilight
-idf.py set-target esp32
-idf.py build
+### 3. 刷写固件
+```bash
+# 连接设备到对应串口后刷写
+flash-device-a   # 刷写设备A (通常 /dev/ttyUSB0)
+flash-device-b   # 刷写设备B (通常 /dev/ttyUSB1)
+flash-device-c   # 刷写设备C (通常 /dev/ttyUSB2)
+```
+
+### 4. 监控输出
+```bash
+# 监控设备串口输出
+monitor-device-a
+monitor-device-b
+monitor-device-c
 ```
 
 ### 3. 硬件连接
